@@ -9,10 +9,25 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@hookform/resolvers": "*",
+    "@react-navigation/bottom-tabs": "*",
+    "@react-navigation/native": "*",
+    "@react-navigation/stack": "*",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "axios": "*",
     "expo": "~52.0.25",
-    "expo-status-bar": "~2.0.1",
+    "linking": "*",
     "react": "18.3.1",
-    "react-native": "0.76.6"
+    "react-native": "0.76.6",
+    "react-native-dotenv": "^3.4.11",
+    "react-native-gesture-handler": "^2.22.0",
+    "react-native-safe-area-context": "^5.1.0",
+    "react-native-toast-message": "*",
+    "react-native-vector-icons": "*",
+    "react-redux": "^8.0.5",
+    "redux": "5.0.0-beta.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

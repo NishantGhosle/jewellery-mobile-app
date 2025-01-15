@@ -39,7 +39,7 @@ const Cart = () => {
   };
 
   const renderItem = ({ item }) => (
-    <View key={item.id} style={[styles.cartItem, { width: width - 32 }]}>
+    <View key={item._id} style={[styles.cartItem, { width: width - 32 }]}>
       <Image source={{ uri: item.images[0] }} style={styles.itemImage} />
       <View style={styles.itemDetails}>
         <Text style={styles.itemName} numberOfLines={2}>
@@ -54,7 +54,7 @@ const Cart = () => {
             onPress={() =>
               dispatch(
                 updateQuantity({
-                  id: item.id,
+                  _id: item._id,
                   quantity: Math.max(1, item.quantity - 1),
                 })
               )
@@ -66,7 +66,7 @@ const Cart = () => {
             style={styles.quantityButton}
             onPress={() =>
               dispatch(
-                updateQuantity({ id: item.id, quantity: item.quantity + 1 })
+                updateQuantity({ _id: item._id, quantity: item.quantity + 1 })
               )
             }>
             <Text style={styles.quantityText}>+</Text>
@@ -75,7 +75,7 @@ const Cart = () => {
       </View>
       <TouchableOpacity
         style={styles.removeButton}
-        onPress={() => dispatch(removeFromCart(item.id))}>
+        onPress={() => dispatch(removeFromCart(item._id))}>
         <Text style={styles.removeText}>REMOVE</Text>
       </TouchableOpacity>
     </View>

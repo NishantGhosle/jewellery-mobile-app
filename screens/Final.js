@@ -9,10 +9,11 @@ import {
   Linking,
   StyleSheet,
 } from 'react-native';
+import {SHEET_URL, WHATSAPP_NO} from "@env";
 
 const Final = ({ route }) => {
-  const SHEET_URL_PRESENT=process.env.SHEET_URL;
-  const WHATSAPP_NO_PRESENT=process.env.WHATSAPP_NO;
+  const SHEET_URL_PRESENT = SHEET_URL;
+  const WHATSAPP_NO_PRESENT = WHATSAPP_NO;
   const { cartItems, subtotal, discount, grandTotal } = route.params;
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');

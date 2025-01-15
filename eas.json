@@ -3,11 +3,11 @@
     "version": ">= 14.4.0",
     "appVersionSource": "remote"
   },
-    "build": {
-      "release": {
-        "android": {
-          "buildType": "apk"
-        }
+  "build": {
+    "release": {
+      "android": {
+        "buildType": "apk"
+      }
     },
     "development": {
       "developmentClient": true,

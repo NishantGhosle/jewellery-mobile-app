@@ -11,10 +11,7 @@ import Toast from 'react-native-toast-message';
 const SplashScreen = () => {
   return (
     <View style={styles.splashContainer}>
-      <Image
-        source={{ uri: 'https://jewellery-images.netlify.app/logo/logo.jpg' }}
-        style={styles.logo}
-      />
+      <Image source={require('./assets/splash-icon.png')} style={styles.logo} />
     </View>
   );
 };

@@ -29,6 +29,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
+      "API_URL": "https://jew-ad-back.onrender.com",
       "eas": {
         "projectId": "897f33b5-a329-48e4-a404-dccf39b5595e"
       }

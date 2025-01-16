@@ -7,9 +7,10 @@ import {
   StyleSheet,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import {API_URL} from "@env"
+import Constants from 'expo-constants';
 
 const Contact = () => {
+  const apiUrl = `${Constants.expoConfig.extra.API_URL}`;
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -41,7 +42,7 @@ const Contact = () => {
 
     try {
       const response = await fetch(
-        `${API_URL}/submit`,
+        `${apiUrl}/submit`,
         {
           method: 'POST',
           headers: {

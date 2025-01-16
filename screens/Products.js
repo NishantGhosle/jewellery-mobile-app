@@ -13,15 +13,15 @@ import Headline from '../components/Headline';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../features/cart/cartSlice';
-import {API_URL} from "@env"
+import Constants from 'expo-constants';
 
 const Products = ({ navigation }) => {
-
+  const apiUrl = `${Constants.expoConfig.extra.API_URL}`;
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/products`);
+      const response = await fetch(`${apiUrl}/api/products`);
       const data = await response.json();
       setProducts(data);
       setFilteredProducts(data);

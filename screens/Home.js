@@ -6,10 +6,10 @@ import ProductCard from '../components/ProductCard';
 import Headline from '../components/Headline';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../features/cart/cartSlice';
-import {API_URL} from "@env"
+import Constants from 'expo-constants';
 
 const Home = ({ navigation }) => {
-
+  const apiUrl = `${Constants.expoConfig.extra.API_URL}`;
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ const Home = ({ navigation }) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/products`);
+      const response = await axios.get(`${apiUrl}/api/products`);
       setProducts(response.data);
     } catch (error) {
       setError('Failed to fetch products. Please try again.');

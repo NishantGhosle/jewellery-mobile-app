@@ -17,6 +17,7 @@
       "bundleIdentifier": "com.nishantghosle.snack3849a245f1154e4f94cfab371c3f39b5"
     },
     "android": {
+      "permissions": ["INTERNET"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

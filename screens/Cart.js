@@ -40,7 +40,7 @@ const Cart = () => {
 
   const renderItem = ({ item }) => (
     <View key={item._id} style={[styles.cartItem, { width: width - 32 }]}>
-      <Image source={{ uri: item.images[0] }} style={styles.itemImage} />
+      <Image source={{ uri: item.images[0] || " "}} style={styles.itemImage} />
       <View style={styles.itemDetails}>
         <Text style={styles.itemName} numberOfLines={2}>
           {item.title}

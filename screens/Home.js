@@ -31,9 +31,19 @@ const Home = ({ navigation }) => {
     fetchProducts();
   }, []);
 
+
   const shuffleArray = (array) => {
-    return array.sort(() => Math.random() - 0.5);
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+    return array;
   };
+
+  
+  // const shuffleArray = (array) => {
+  //   return array.sort(() => Math.random() - 0.5);
+  // };
 
   const handleNavigateToDetail = (product) => {
     navigation.navigate('ProductDetail', { product });

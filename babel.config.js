@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   presets: ['babel-preset-expo'],
   plugins: [
     [
@@ -11,5 +11,4 @@ module.exports = {
       },
     ],
   ],
-}
-
+};

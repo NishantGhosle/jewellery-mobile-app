@@ -9,7 +9,6 @@ import { addToCart } from '../features/cart/cartSlice';
 import {API_URL} from "@env"
 
 const Home = ({ navigation }) => {
-  const BASE_URL = API_URL;
 
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
@@ -18,7 +17,7 @@ const Home = ({ navigation }) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/products`);
+      const response = await axios.get(`${API_URL}/api/products`);
       setProducts(response.data);
     } catch (error) {
       setError('Failed to fetch products. Please try again.');
@@ -39,11 +38,6 @@ const Home = ({ navigation }) => {
     }
     return array;
   };
-
-  
-  // const shuffleArray = (array) => {
-  //   return array.sort(() => Math.random() - 0.5);
-  // };
 
   const handleNavigateToDetail = (product) => {
     navigation.navigate('ProductDetail', { product });

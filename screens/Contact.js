@@ -11,8 +11,6 @@ import {API_URL} from "@env"
 
 const Contact = () => {
 
-  const BASE_URL = API_URL;
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -43,7 +41,7 @@ const Contact = () => {
 
     try {
       const response = await fetch(
-        `${BASE_URL}/submit`,
+        `${API_URL}/submit`,
         {
           method: 'POST',
           headers: {

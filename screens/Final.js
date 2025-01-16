@@ -12,8 +12,6 @@ import {
 import {SHEET_URL, WHATSAPP_NO} from "@env";
 
 const Final = ({ route }) => {
-  const SHEET_URL_PRESENT = SHEET_URL;
-  const WHATSAPP_NO_PRESENT = WHATSAPP_NO;
   const { cartItems, subtotal, discount, grandTotal } = route.params;
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -68,7 +66,7 @@ const Final = ({ route }) => {
     };
 
     try {
-      const response = await fetch(`${SHEET_URL_PRESENT}`, {
+      const response = await fetch(`${SHEET_URL}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +96,7 @@ ${products
   )
   .join('\n')}`;
 
-        const whatsappUrl = `https://wa.me/${WHATSAPP_NO_PRESENT}?text=${encodeURIComponent(
+        const whatsappUrl = `https://wa.me/${WHATSAPP_NO}?text=${encodeURIComponent(
           whatsappMessage
         )}`;
 

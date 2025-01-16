@@ -16,12 +16,12 @@ import { addToCart } from '../features/cart/cartSlice';
 import {API_URL} from "@env"
 
 const Products = ({ navigation }) => {
-  const BASE_URL = API_URL;
+
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/api/products`);
+      const response = await fetch(`${API_URL}/api/products`);
       const data = await response.json();
       setProducts(data);
       setFilteredProducts(data);

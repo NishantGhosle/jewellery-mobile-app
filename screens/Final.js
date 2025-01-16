@@ -9,9 +9,11 @@ import {
   Linking,
   StyleSheet,
 } from 'react-native';
-import {SHEET_URL, WHATSAPP_NO} from "@env";
+import Constants from 'expo-constants';
 
 const Final = ({ route }) => {
+  const sheetUrl = `${Constants.expoConfig.extra.SHEET_URL}`;
+  const noUrl = `${Constants.expoConfig.extra.WHATSAPP_NO}`;
   const { cartItems, subtotal, discount, grandTotal } = route.params;
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -66,7 +68,7 @@ const Final = ({ route }) => {
     };
 
     try {
-      const response = await fetch(`${SHEET_URL}`, {
+      const response = await fetch(`${sheetUrl}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +77,7 @@ const Final = ({ route }) => {
       });
 
       const result = await response.json();
-
+      console.log(result);
       if (response.ok) {
         const whatsappMessage = `Hi, I would like to place an order:
 Name: ${name}
@@ -96,7 +98,7 @@ ${products
   )
   .join('\n')}`;
 
-        const whatsappUrl = `https://wa.me/${WHATSAPP_NO}?text=${encodeURIComponent(
+        const whatsappUrl = `https://wa.me/${noUrl}?text=${encodeURIComponent(
           whatsappMessage
         )}`;
 

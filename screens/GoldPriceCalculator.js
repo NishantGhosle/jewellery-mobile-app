@@ -27,11 +27,16 @@ const GoldPriceCalculator = () => {
     setError('');
     const totalPrice = parseFloat(grams) * goldRate;
     setPrice(totalPrice);
-    const discountedPrice =
-      totalPrice - discount > 0 ? totalPrice - discount : 0;
+  
+    // Calculate 1.5% discount
+    const discount = totalPrice * 0.015;
+    setDiscount(discount);
+  
+    const discountedPrice = totalPrice - discount;
     setGrandTotal(discountedPrice);
   };
-
+  
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Gold Price Calculator</Text>

@@ -97,32 +97,33 @@ const Products = ({ navigation }) => {
         </View>
       )}
 
-      <FlatList
-        data={filteredProducts}
-        keyExtractor={(item) => item._id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.cardContainer}>
-            <ProductCard
-              key={item.id}
-              onAddToCart={handleAddToCart}
-              product={item}
-              title={item.title}
-              images={item.images}
-              price={`${item.price}`}
-              onCardPress={() => handleNavigateToDetail(item)}
-            />
-          </View>
-        )}
-        ListEmptyComponent={
-          <View style={styles.empty}>
-            <Text>No products found</Text>
-          </View>
-        }
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={
-          filteredProducts.length === 0 ? styles.emptyContainer : null
-        }
-      />
+<FlatList
+  data={filteredProducts}
+  keyExtractor={(item) => item._id.toString()}
+  renderItem={({ item }) => (
+    <ProductCard
+      key={item.id}
+      onAddToCart={handleAddToCart}
+      product={item}
+      title={item.title}
+      images={item.images}
+      price={`${item.price}`}
+      onCardPress={() => handleNavigateToDetail(item)}
+    />
+  )}
+  numColumns={2} // Set two items per row
+  columnWrapperStyle={styles.row} // Style for each row
+  ListEmptyComponent={
+    <View style={styles.empty}>
+      <Text>No products found</Text>
+    </View>
+  }
+  showsVerticalScrollIndicator={false}
+  contentContainerStyle={
+    filteredProducts.length === 0 ? styles.emptyContainer : null
+  }
+/>
+
 
       <TouchableOpacity
         style={styles.filterIcon}

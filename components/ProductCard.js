@@ -1,5 +1,7 @@
-import { TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import Toast from 'react-native-toast-message';
+
+const { width } = Dimensions.get('window'); // Get the screen width
 
 const ProductCard = ({
   title,
@@ -30,7 +32,7 @@ const ProductCard = ({
         <Image
           source={{ uri: images[0] }}
           style={styles.image}
-          resizeMode="cover"
+          resizeMode="contain" // Ensures the full image is visible
         />
       ) : (
         <Text style={styles.placeholderText}>No Image Available</Text>
@@ -48,19 +50,19 @@ const ProductCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    padding: 16,
-    margin: 10,
+    width: (width / 2) - 20, // Half the screen width minus padding
+    padding: 10,
+    margin: 5,
     backgroundColor: '#fff',
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    elevation: 2,
-    overflow: 'hidden',
-    width: 400,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 4,
     alignSelf: 'center',
   },
   image: {
-    width: '100%',
-    height: 400,
+    width: '100%', // Full width of the card
+    height: 120, // Fixed height for consistent display
     marginBottom: 10,
     borderWidth: 0.5,
   },
@@ -71,26 +73,35 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   title: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: '600',
-    color: '#000000',
-    marginBottom: 8,
+    color: '#000',
+    marginBottom: 4,
+    textAlign: 'center',
   },
   price: {
-    fontSize: 14,
-    color: '#000',
+    fontSize: 15,
+    color: '#333',
     marginBottom: 8,
+    textAlign: 'center',
   },
   addToCartButton: {
-    backgroundColor: '#000000',
-    paddingVertical: 12,
+    backgroundColor: '#000',
+    padding: 8,
     alignItems: 'center',
     marginTop: 8,
   },
   addToCartButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  row: {
+    flex: 1,
+    justifyContent: 'space-between',
   },
 });
 
+
 export default ProductCard;
+

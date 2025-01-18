@@ -1,8 +1,9 @@
+import React, { useCallback, useMemo, memo } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
+  FlatList,
   Image,
   Dimensions,
   TouchableOpacity,
@@ -12,11 +13,12 @@ import { addToCart } from '../features/cart/cartSlice';
 import Toast from 'react-native-toast-message';
 
 const { width } = Dimensions.get('window');
-const ProductDetail = ({ route }) => {
+
+const ProductDetail = memo(({ route }) => {
   const { product } = route.params;
   const dispatch = useDispatch();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = useCallback(() => {
     dispatch(addToCart(product));
     Toast.show({
       type: 'success',
@@ -24,41 +26,21 @@ const ProductDetail = ({ route }) => {
       text2: `${product.title} has been added to the cart!`,
       position: 'bottom',
       visibilityTime: 2000,
-      autoHide: true,
-      onPress: () => {
-        console.log(`₹${product.title} clicked in Toast!`);
-      },
     });
-  };
+  }, [dispatch, product]);
 
-  const imagess = product.images || [];
+  const renderedDetails = useMemo(() => (
+    <View style={styles.details}>
+      <Text style={styles.title}>{product.title}</Text>
+      <Text style={styles.price}>Price: ₹{product.price}</Text>
+      <Text style={styles.description}>{product.description}</Text>
+    </View>
+  ), [product]);
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.content}>
-        <ScrollView
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          style={styles.carousel}>
-          {imagess.length > 0 ? (
-            imagess.map((images, index) => (
-              <Image key={index} source={{ uri: images }} style={styles.image} />
-            ))
-          ) : (
-            <View style={styles.noImage}>
-              <Text>No images available</Text>
-            </View>
-          )}
-        </ScrollView>
-
-        <View style={styles.details}>
-          <Text style={styles.title}>{product.title}</Text>
-          <Text style={styles.price}>Price: ₹{product.price}</Text>
-          <Text style={styles.description}>{product.description}</Text>
-        </View>
-      </ScrollView>
-
+      <ImageCarousel images={product.images || []} />
+      {renderedDetails}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.addToCartButton}
@@ -68,38 +50,62 @@ const ProductDetail = ({ route }) => {
       </View>
     </View>
   );
-};
+});
+
+const ImageCarousel = memo(({ images }) => (
+  <FlatList
+    data={images}
+    horizontal
+    pagingEnabled
+    keyExtractor={(item, index) => index.toString()}
+    renderItem={({ item }) => (
+      <Image source={{ uri: item }} style={styles.image} />
+    )}
+    showsHorizontalScrollIndicator={false}
+    ListEmptyComponent={
+      <View style={styles.noImage}>
+        <Text>No images available</Text>
+      </View>
+    }
+    style={styles.carousel}
+  />
+));
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
-  content: { flex: 1, marginBottom: 10, backgroundColor: '#fff' },
-  carousel: { height: 450, marginBottom: 1 },
-  image: { width: width, height: 450, resizeMode: 'contain' },
+  carousel: { marginBottom: 10 },
+  image: { 
+    width: width, // Full screen width
+    height: width * 0.75, // Maintain a 4:3 aspect ratio (adjust as needed)
+    resizeMode: 'contain', // Ensures the entire image fits within the space
+  },
   noImage: {
-    width: width,
-    height: 400,
+    width: width, // Full screen width
+    height: width * 0.75, // Same aspect ratio for empty state
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#f0f0f0', // Placeholder background color
   },
   details: {
     padding: 20,
     backgroundColor: '#fff',
-    borderRadius: 10,
     margin: 10,
   },
-  title: { fontSize: 20, fontWeight: 600, marginBottom: 10 },
-  price: { fontSize: 14, fontWeight: 600, marginBottom: 15 },
+  title: { fontSize: 20, fontWeight: '600', marginBottom: 10 },
+  price: { fontSize: 16, fontWeight: '600', marginBottom: 15 },
   description: { fontSize: 15 },
+  buttonContainer: {
+    padding: 10,
+  },
   addToCartButton: {
-    backgroundColor: '#000000',
+    backgroundColor: '#000',
     padding: 12,
-    marginBottom: 10,
     alignItems: 'center',
-    width: '100%',
   },
   addToCartButtonText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: '600',
   },
 });
 

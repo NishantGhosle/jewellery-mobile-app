@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
-import { Text, ScrollView, StyleSheet, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, StyleSheet, View, FlatList } from 'react-native';
 import axios from 'axios';
-import Carousel from '../components/Carousel';
 import ProductCard from '../components/ProductCard';
 import Headline from '../components/Headline';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../features/cart/cartSlice';
 import Constants from 'expo-constants';
+import Banner from '../components/Banner';
 
 const Home = ({ navigation }) => {
   const apiUrl = `${Constants.expoConfig.extra.API_URL}`;
@@ -25,11 +25,10 @@ const Home = ({ navigation }) => {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     fetchProducts();
   }, []);
-
 
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -65,60 +64,69 @@ const Home = ({ navigation }) => {
 
   const topProducts = shuffleArray([...products]);
   const featuredProducts = shuffleArray([...products]);
+  const popularProducts = shuffleArray([...products]);
+
+  const renderHorizontalList = (title, data) => (
+    <View style={styles.newCont}>
+      <Text style={styles.sectionTitle}>{title}</Text>
+      <FlatList
+        data={data}
+        horizontal
+        keyExtractor={(item, index) => item.id || index.toString()}
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <ProductCard
+            title={item.title}
+            images={item.images}
+            price={item.price}
+            onCardPress={() => handleNavigateToDetail(item)}
+            onAddToCart={() => handleAddToCart(item)}
+          />
+        )}
+      />
+    </View>
+  );
+
+  const renderListHeader = () => (
+    <View style={styles.container}>
+      <Headline />
+      <Banner
+        image={require('../assets/banner1.png')}
+        title="Exclusive Jewellery Collection"
+        description="Discover the latest trends in gold jewellery.!"
+      />
+      {renderHorizontalList('Top Products', topProducts)}
+      <Banner
+        image={require('../assets/banner3.png')}
+        title="Exclusive Jewellery Collection"
+        description="Discover the latest trends in gold jewellery.!"
+      />
+      {renderHorizontalList('Popular Products', popularProducts)}
+      <Banner
+        image={require('../assets/banner2.png')}
+        title="Exclusive Jewellery Collection"
+        description="Discover the latest trends in gold jewellery.!"
+      />
+      {renderHorizontalList('Featured Products', featuredProducts)}
+    </View>
+  );
 
   return (
-    <ScrollView style={styles.container}>
-      <Headline />
-      <Carousel />
-      <Text style={styles.sectionTitle}>Top Products</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {topProducts.map((product, index) => (
-          <ProductCard
-             key={product.id || index}
-            title={product.title}
-            images={product.images}
-            price={product.price}
-            onCardPress={() => handleNavigateToDetail(product)}
-            onAddToCart={() => handleAddToCart(product)}
-            product={product}
-          />
-        ))}
-      </ScrollView>
-      <Text style={styles.sectionTitle}>Featured Products</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {featuredProducts.map((product, index) => (
-          <ProductCard
-             key={product.id || index}
-            title={product.title}
-            images={product.images}
-            price={product.price}
-            onCardPress={() => handleNavigateToDetail(product)}
-            onAddToCart={() => handleAddToCart(product)}
-            product={product}
-          />
-        ))}
-      </ScrollView>
-      <Text style={styles.sectionTitle}>All Products</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {products.map((product, index) => (
-          <ProductCard
-          key={product.id || index}
-            title={product.title}
-            images={product.images}
-            price={product.price}
-            onCardPress={() => handleNavigateToDetail(product)}
-            onAddToCart={() => handleAddToCart(product)}
-            product={product}
-          />
-        ))}
-      </ScrollView>
-    </ScrollView>
+    <FlatList
+      data={products}
+      keyExtractor={(item, index) => item.id || index.toString()}
+      showsVerticalScrollIndicator={false}
+      ListHeaderComponent={renderListHeader}
+    />
   );
 };
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 10, backgroundColor: 'white' },
-  sectionTitle: { fontSize: 22, fontWeight: 600, marginVertical: 10 },
+  newCont:{
+    marginBottom:30,
+  },
+  sectionTitle: { fontSize: 22, fontWeight: '600', marginVertical: 10 },
   loading: {
     flex: 1,
     justifyContent: 'center',
